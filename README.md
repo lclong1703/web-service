@@ -13,23 +13,23 @@
 
 ## Features
 
-use postman check
+#use postman check
 
 - Register:
 
-  1.enter email: use method POST
+1. Enter email: use method POST
 
 ```bash
 $ http://localhost:3000/users/register
 ```
 
-2.verify email: use method POST
+2. Verify email: use method POST
 
 ```bash
 $ http://localhost:3000/users/verification
 ```
 
-3.set-pasword: use method PATCH and set headers `email: registered email name`
+3. Set-pasword: use method PATCH and set headers `email: registered email name`
 
 ```bash
 $ http://localhost:3000/users/set-password
