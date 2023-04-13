@@ -29,7 +29,6 @@ export class UserService {
 
   async createUser(userDto: UserDto): Promise<UserDto> {
     const userRepository = this.dataSource.manager.getRepository(User);
-    // userDto.password = await this.hashPassword(userDto.password);
     const user = await userRepository.findOne({
       where: { email: userDto.email },
     });
