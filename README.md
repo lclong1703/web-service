@@ -17,19 +17,19 @@ use postman check
 
 - Register:
 
-# 1.enter email: use method POST
+  1.enter email: use method POST
 
 ```bash
 $ http://localhost:3000/users/register
 ```
 
-# verify email: use method POST
+2.verify email: use method POST
 
 ```bash
 $ http://localhost:3000/users/verification
 ```
 
-# set-pasword: use method PATCH and set headers `email: registered email name`
+3.set-pasword: use method PATCH and set headers `email: registered email name`
 
 ```bash
 $ http://localhost:3000/users/set-password
