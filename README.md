@@ -65,8 +65,8 @@ value:
 $ http://localhost:3000/users/login
 ```
 
-![alt text](https://i.imgur.com/riU6SO5.png)
-<space>value:<space>
+![alt text](https://i.imgur.com/Gh1phJk.png)
+value:
 | field | Description |
 | --- | --- |
 | email | email for login |
