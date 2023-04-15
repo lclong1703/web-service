@@ -49,6 +49,9 @@ value:
 $ http://localhost:3000/users/set-password
 ```
 
+set headers:
+![alt text](https://i.imgur.com/sUOn4Py.png)
+
 ![alt text](https://i.imgur.com/22adQIW.png)
 value:
 | field | Description |
