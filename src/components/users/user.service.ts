@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { User as UserDto } from './dto/user.dto';
@@ -14,13 +15,21 @@ import * as bcrypt from 'bcrypt';
 import { Verification } from './dto/verification.dto';
 import generateApiKey from 'generate-api-key';
 import { MailerService } from '@nestjs-modules/mailer';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class UserService {
   constructor(
     private readonly dataSource: DataSource,
     private readonly userConverter: UserConverter,
     private readonly mailerService: MailerService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
+  private readonly privateKey = Buffer.from(
+    this.configService.get<string>('JWT_PRIVATE_KEY'),
+    'base64',
+  ).toString('ascii');
 
   private async hashPassword(password: string) {
     const salt = await bcrypt.genSalt();
@@ -29,7 +38,6 @@ export class UserService {
 
   async createUser(userDto: UserDto): Promise<UserDto> {
     const userRepository = this.dataSource.manager.getRepository(User);
-    // userDto.password = await this.hashPassword(userDto.password);
     const user = await userRepository.findOne({
       where: { email: userDto.email },
     });
@@ -84,12 +92,27 @@ export class UserService {
       where: { email: email, key: null },
     });
     if (!user) throw new NotFoundException(`User ${email} not found`);
+    if (user && user.status !== Status.INACTIVE) throw new ForbiddenException();
     user.name = userDto.name; //to do information
     user.password = await this.hashPassword(userDto.password);
     user.status = Status.ACTIVE;
     user.expireCode = null;
     const updateUser = await userRepository.save(user);
     return this.userConverter.toDto(updateUser);
+  }
+
+  private async issueAccessToken(user: User): Promise<Login> {
+    const userDto = this.userConverter.toDto(user);
+    return {
+      access_token: this.jwtService.sign(
+        { user: userDto },
+        {
+          privateKey: this.privateKey,
+          algorithm: 'RS256',
+          expiresIn: '1h',
+        },
+      ),
+    } as Login;
   }
 
   async login(login: Login) {
@@ -106,6 +129,6 @@ export class UserService {
     if (!passwordCompare) {
       throw new UnauthorizedException('invalid password');
     }
-    return this.userConverter.toDto(user);
+    return await this.issueAccessToken(user);
   }
 }
