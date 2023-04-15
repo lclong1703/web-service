@@ -14,7 +14,7 @@
 
 ## Features
 
-#use postman check
+#use postman check: Body -> raw -> `Text` to `JSON`
 
 - Register:
 
