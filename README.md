@@ -3,6 +3,7 @@
 - node: v16.15.0
 - yarn: v1.22.19
 - mysql: create database with name `test`
+- `git clone https://github.com/lclong1703/web-service.git`
 
 ## Start project
 
@@ -22,35 +23,38 @@
 ```bash
 $ http://localhost:3000/users/register
 ```
+
 value:
 | field | Description |
 | --- | --- |
-| email | email for register |
-2. Verify email: use method POST
+| email | email for register | 2. Verify email: use method POST
 
 ```bash
 $ http://localhost:3000/users/verification
 ```
+
 value:
 | field | Description |
 | --- | --- |
 | email | email for register |
-| key | key for verify received in email |
-3. Set-pasword: use method PATCH and set headers `email: registered email name`
+| key | key for verify received in email | 3. Set-pasword: use method PATCH and set headers `email: registered email name`
 
 ```bash
 $ http://localhost:3000/users/set-password
 ```
+
 value:
 | field | Description |
 | --- | --- |
 | name | name for user |
 | password | password for user |
+
 - Login: Use method POST
 
 ```bash
 $ http://localhost:3000/users/login
 ```
+
 value:
 | field | Description |
 | --- | --- |
