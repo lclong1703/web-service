@@ -24,6 +24,7 @@
 $ http://localhost:3000/users/register
 ```
 
+![alt text](https://i.imgur.com/bht7w6N.png)
 value:
 | field | Description |
 | --- | --- |
@@ -35,6 +36,7 @@ value:
 $ http://localhost:3000/users/verification
 ```
 
+![alt text](https://i.imgur.com/c5iXx06.png)
 value:
 | field | Description |
 | --- | --- |
@@ -47,6 +49,7 @@ value:
 $ http://localhost:3000/users/set-password
 ```
 
+![alt text](https://i.imgur.com/22adQIW.png)
 value:
 | field | Description |
 | --- | --- |
@@ -59,6 +62,7 @@ value:
 $ http://localhost:3000/users/login
 ```
 
+![alt text](https://i.imgur.com/riU6SO5.png)
 value:
 | field | Description |
 | --- | --- |
