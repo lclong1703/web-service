@@ -18,7 +18,7 @@
 
 - Register:
 
-1. Enter email: use method POST
+1. Enter email: use method POST.
 
 ```bash
 $ http://localhost:3000/users/register
@@ -27,7 +27,9 @@ $ http://localhost:3000/users/register
 value:
 | field | Description |
 | --- | --- |
-| email | email for register | 2. Verify email: use method POST
+| email | email for register |
+
+2. Verify email OTP: use method POST.
 
 ```bash
 $ http://localhost:3000/users/verification
@@ -37,7 +39,9 @@ value:
 | field | Description |
 | --- | --- |
 | email | email for register |
-| key | key for verify received in email | 3. Set-pasword: use method PATCH and set headers `email: registered email name`
+| key | key for verify received in email |
+
+3. set password: use method PATCH and set headers `email: registered email name`.
 
 ```bash
 $ http://localhost:3000/users/set-password
