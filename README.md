@@ -12,11 +12,11 @@
 - Start project with command `yarn start:dev`
 - After start project change file `app.module.ts` line 23: `synchronize: true` to `synchronize: false`
 
-## Features
+# Features
 
-# use swagger check: localhost:3000/api/
+## use swagger check: localhost:3000/api/
 
-#use postman check: Body -> raw -> `Text` to `JSON`
+## use postman check: Body -> raw -> `Text` to `JSON`
 
 - Register:
 
