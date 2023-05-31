@@ -1,0 +1,334 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+  license:
+    name: EULA
+    url: 'https://en.wikipedia.org/wiki/End-user_license_agreement'
+  description: API definition for COMPAON
+servers:
+  - url: 'http://localhost:3000/'
+paths:
+  '/users/register':
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+        - user
+      summary: register user
+      description: register user
+      operationId: register
+      requestBody:
+        description: register user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      responses:
+        '201':
+          description: register
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Bad Request
+                    details:
+                      - field: .params.id
+                        message: 'should match pattern "^[0-9]+$"'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Internal server error
+                    details: []
+  '/users/login':
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+        - user
+      summary: login
+      description: login
+      operationId: login
+      requestBody:
+        description: login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        '201':
+          description: login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Bad Request
+                    details:
+                      - field: .params.id
+                        message: 'should match pattern "^[0-9]+$"'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Internal server error
+                    details: []
+  '/users/verification':
+    post:
+      tags:
+        - user
+      summary: verify user
+      description: verify user
+      operationId: verify
+      requestBody:
+        description: verify user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Verify'
+        required: true
+      responses:
+        '201':
+          description: Verify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verify'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Bad Request
+                    details:
+                      - field: .params.id
+                        message: 'should match pattern "^[0-9]+$"'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Internal server error
+                    details: []
+  '/users/set-password':
+    post:
+      tags:
+        - user
+      summary: set-password
+      description: set-password
+      operationId: set-password
+      parameters:
+        - name: emailQ
+          description: email
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: set-password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/setPassword'
+        required: true
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/setPassword'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Bad Request
+                    details:
+                      - field: .params.id
+                        message: 'should match pattern "^[0-9]+$"'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+              examples:
+                example-1:
+                  value:
+                    message: Internal server error
+                    details: []  
+components:
+  schemas:
+    Login:
+      type: object
+      required:
+        - email
+        - password
+        - access_token
+      properties:
+        email:
+          type: string
+          example: lclong1703@gmail.com
+        password:
+          type: string
+          writeOnly: true
+        access_token:
+          type: string
+          readOnly: true
+          example: ABC
+    Register:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+        - status
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: Long
+          readOnly: true
+        email:
+          type: string
+          example: lclong@gmail.com
+        password:
+          type: string
+          minLength: 1
+          maxLength: 255
+          readOnly: true
+        key:
+          type: string
+          example: ABC
+          readOnly: true
+        status:
+          type: string
+          enum: ['active','inactive']
+          example: 'active'
+          readOnly: true
+        expire_code:
+          type: string
+          example: ABC
+          readOnly: true
+    Verify:
+      type: object
+      required:
+        - email
+        - key
+      properties:
+        email:
+          type: string
+          example: lclong1703@gmail.com
+        key:
+          type: string
+          example: ABC
+    setPassword:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+        - status
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: Long
+        email:
+          type: string
+          example: lclong@gmail.com
+          readOnly: true
+        password:
+          type: string
+          minLength: 1
+          maxLength: 255
+        key:
+          type: string
+          example: ABC
+          readOnly: true
+        status:
+          type: string
+          enum: ['active','inactive']
+          example: 'active'
+          readOnly: true
+        expire_code:
+          type: string
+          example: ABC
+          readOnly: true
+    ErrorResponseBody:
+      type: object
+      required:
+        - message
+        - details
+      properties:
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+    ErrorDetail:
+      type: object
+      required:
+        - field
+        - message
+      properties:
+        field:
+          type: string
+        message:
+          type: string
