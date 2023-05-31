@@ -14,6 +14,8 @@
 
 ## Features
 
+# use swagger check: localhost:3000/api/
+
 #use postman check: Body -> raw -> `Text` to `JSON`
 
 - Register:
